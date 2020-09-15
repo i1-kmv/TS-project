@@ -1,9 +1,9 @@
 import React from "react";
-import {strict} from "assert";
 
 type PropsType = {
     title: string
     tasks: Array<TaskType>
+    onDeleteTask: Function
 }
 
 type TaskType = {
@@ -13,6 +13,17 @@ type TaskType = {
 }
 
 export function TodoList(props: PropsType) {
+
+
+
+    let tasks = props.tasks.map(task => {
+        return   <li><input type="checkbox" checked={task.isDone}/>
+        <span>{task.title}</span>
+            <button onClick={() => {props.onDeleteTask(task.id)}}>x</button>
+        </li>
+
+    })
+
     return <div>
         <h3>{props.title}</h3>
         <div>
@@ -20,9 +31,7 @@ export function TodoList(props: PropsType) {
             <button>+</button>
         </div>
         <ul>
-            <li><input type="checkbox" checked={true}/> <span>{props.tasks[0].title}</span></li>
-            <li><input type="checkbox" checked={true}/> <span>{props.tasks[1].title}</span></li>
-            <li><input type="checkbox" checked={false}/> <span>{props.tasks[2].title}</span></li>
+            {tasks}
         </ul>
         <div>
             <button>All</button>
