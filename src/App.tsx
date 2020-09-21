@@ -34,6 +34,11 @@ function App() {
     }
 
     const changeFilter = (value: FilterValuesType, todoListId: string) => {
+        let todolist = todoLists.find(t => t.id === todoListId)
+        if (todolist) {
+            todolist.filter = value;
+            setTodoLists([...todoLists])
+        }
 
     }
 
