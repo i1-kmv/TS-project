@@ -1,5 +1,6 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "./App";
+import {AddItemForm} from "./AddItemForm";
 
 type PropsType = {
     id: string
@@ -21,36 +22,10 @@ export type TaskType = {
 
 export function TodoList(props: PropsType) {
 
-    const [newTaskTitle, setNewTaskTitle] = useState("")
-    const [error, setError] = useState(false)
-
-    const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            setNewTaskTitle(e.currentTarget.value)
-    }
-
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>)  => {
-        setError(false)
-        if (e.charCode === 13) {
-            props.onAddTask(newTaskTitle, props.id);
-            setNewTaskTitle("")
-        }
-    }
-
-    const addTask = () => {
-        if (newTaskTitle.trim() === '') {
-           return  setError(true)
-        }
-        props.onAddTask(newTaskTitle, props.id);
-        setNewTaskTitle("")
-
-    }
-
     const onAllFilter = () =>  props.changeFilter("all", props.id)
     const onActiveFilter = () =>  props.changeFilter("active", props.id)
     const onCompletedFilter = () => props.changeFilter("completed", props.id)
     const removeTodoList = () => {props.removeTodoList(props.id)}
-
-
 
     let tasks = props.tasks.map(task => {
 
@@ -74,19 +49,13 @@ export function TodoList(props: PropsType) {
 
     })
 
+    const onAddTask = (title: string) => {
+        props.onAddTask(title, props.id)
+    }
+
     return <div>
         <h3>{props.title} <button onClick={removeTodoList}>x</button></h3>
-        <div>
-            <input value={newTaskTitle}
-                   onChange={onNewTitleChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
-            />
-            <button
-                onClick={addTask}>+
-            </button>
-            {error && <div className="error-message">Field is required</div>}
-        </div>
+        <AddItemForm addItem={onAddTask}/>
         <ul>
             {tasks}
         </ul>
@@ -106,3 +75,4 @@ export function TodoList(props: PropsType) {
         </div>
     </div>
 }
+
