@@ -2,10 +2,11 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValuesType} from "./App";
 
 type PropsType = {
+    id: string
     title: string
     tasks: Array<TaskType>
     onDeleteTask: (taskId: string) => void
-    changeFilter: (value: FilterValuesType) => void
+    changeFilter: (value: FilterValuesType, todoListId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
     onAddTask: (newTaskTitle: string) => void
     filter: FilterValuesType
@@ -43,9 +44,9 @@ export function TodoList(props: PropsType) {
 
     }
 
-    const onAllFilter = () =>  props.changeFilter("all")
-    const onActiveFilter = () =>  props.changeFilter("active")
-    const onCompletedFilter = () => props.changeFilter("completed")
+    const onAllFilter = () =>  props.changeFilter("all", props.id)
+    const onActiveFilter = () =>  props.changeFilter("active", props.id)
+    const onCompletedFilter = () => props.changeFilter("completed", props.id)
 
 
 
