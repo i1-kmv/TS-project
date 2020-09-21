@@ -5,10 +5,10 @@ type PropsType = {
     id: string
     title: string
     tasks: Array<TaskType>
-    onDeleteTask: (taskId: string) => void
+    onDeleteTask: (taskId: string,todoListId: string) => void
     changeFilter: (value: FilterValuesType, todoListId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
-    onAddTask: (newTaskTitle: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean,todoListId: string) => void
+    onAddTask: (newTaskTitle: string,todoListId: string) => void
     filter: FilterValuesType
 }
 
@@ -30,7 +30,7 @@ export function TodoList(props: PropsType) {
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>)  => {
         setError(false)
         if (e.charCode === 13) {
-            props.onAddTask(newTaskTitle);
+            props.onAddTask(newTaskTitle, props.id);
             setNewTaskTitle("")
         }
     }
@@ -39,7 +39,7 @@ export function TodoList(props: PropsType) {
         if (newTaskTitle.trim() === '') {
            return  setError(true)
         }
-        props.onAddTask(newTaskTitle);
+        props.onAddTask(newTaskTitle, props.id);
         setNewTaskTitle("")
 
     }
@@ -53,10 +53,10 @@ export function TodoList(props: PropsType) {
     let tasks = props.tasks.map(task => {
 
         const onRemoveTask = () => {
-            props.onDeleteTask(task.id)
+            props.onDeleteTask(task.id, props.id)
         }
         const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) =>{
-            props.changeTaskStatus(task.id, e.currentTarget.checked)
+            props.changeTaskStatus(task.id, e.currentTarget.checked, props.id)
         }
 
         return <li key={task.id} className={task.isDone === true ? "done-task" : "" }>
