@@ -38,8 +38,7 @@ export let todoListId1 = v1()
 export let todoListId2 = v1()
 
 const initialState :Array<TodoListType> = [
-    {id: todoListId1, title: "what to learn", filter: "all"},
-    {id: todoListId2, title: "what to buy", filter: "all"},
+
 ]
 
 export const todoListsReducer = (state: Array<TodoListType> = initialState, action: ActionsType):Array<TodoListType> => {
@@ -52,7 +51,7 @@ export const todoListsReducer = (state: Array<TodoListType> = initialState, acti
             return [ {id: action.todoListId, title: action.title, filter: 'all'}, ...state]
         }
         case 'CHANGE-TODOLIST-TITLE': {
-            let todoList = state.find(t => t.id === action.id)
+            let todoList = state.find(t => t.id == action.id)
             if (todoList) {
                 todoList.title = action.title
             }

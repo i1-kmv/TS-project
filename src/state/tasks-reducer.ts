@@ -48,17 +48,7 @@ export const addTodoListAC = (title: string): AddTodoListActionType => {
     return { type: 'ADD-TODOLIST', title, todoListId: v1()}
 }
 
-const initialState: TasksStateType = {
-    [todoListId1]: [
-        {id: v1(), title: "HTML & CSS", isDone: false},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "ReactJS", isDone: false}],
-    [todoListId2]: [
-        {id: v1(), title: "Books", isDone: false},
-        {id: v1(), title: "Courses", isDone: true},
-        {id: v1(), title: "Soft", isDone: false}
-    ]
-}
+const initialState: TasksStateType = {}
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType):TasksStateType => {
     switch (action.type) {

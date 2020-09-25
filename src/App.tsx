@@ -22,6 +22,25 @@ export type TasksStateType = {
 
 function App() {
 
+    let todoListId1 = v1()
+    let todoListId2 = v1()
+
+    let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
+        {id: todoListId1, title: "what to learn", filter: "all"},
+        {id: todoListId2, title: "what to buy", filter: "all"},
+    ])
+
+    let [tasksObj, setTasks] = useState<TasksStateType>({
+        [todoListId1]: [
+            {id: v1(), title: "HTML & CSS", isDone: false},
+            {id: v1(), title: "JS", isDone: true},
+            {id: v1(), title: "ReactJS", isDone: false}],
+        [todoListId2]: [
+            {id: v1(), title: "Books", isDone: false},
+            {id: v1(), title: "Courses", isDone: true},
+            {id: v1(), title: "Soft", isDone: false}
+        ]
+    })
 
     const onDeleteTask = (id: string, todoListId: string) => {
         let tasks = tasksObj[todoListId]
@@ -66,14 +85,6 @@ function App() {
 
     }
 
-    let todoListId1 = v1()
-    let todoListId2 = v1()
-
-    let [todoLists, setTodoLists] = useState<Array<TodoListType>>([
-        {id: todoListId1, title: "what to learn", filter: "all"},
-        {id: todoListId2, title: "what to buy", filter: "all"},
-    ])
-
     let removeTodoList = (todoListId: string) => {
         let filteredTodoList = todoLists.filter(t => t.id !== todoListId)
         setTodoLists(filteredTodoList)
@@ -85,21 +96,10 @@ function App() {
         const todoList = todoLists.find(t => t.id === id)
         if (todoList) {
             todoList.title = newTitle
-            setTodoLists([...todoLists, todoList])
+            setTodoLists([...todoLists])
         }
-    }
 
-    let [tasksObj, setTasks] = useState<TasksStateType>({
-        [todoListId1]: [
-            {id: v1(), title: "HTML & CSS", isDone: false},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: false}],
-        [todoListId2]: [
-            {id: v1(), title: "Books", isDone: false},
-            {id: v1(), title: "Courses", isDone: true},
-            {id: v1(), title: "Soft", isDone: false}
-        ]
-    })
+    }
 
     const addTodoList = (title: string) => {
         let todoList: TodoListType = {
