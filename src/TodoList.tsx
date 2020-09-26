@@ -52,7 +52,7 @@ export function TodoList(props: PropsType) {
                       checked={task.isDone}
                       onChange={onChangeStatusHandler}
             />
-            <EditableSpan title={task.title} onChange={onChangeTitleHandler}/>
+            <EditableSpan value={task.title} onChange={onChangeTitleHandler}/>
             <IconButton onClick={onRemoveTask} aria-label="delete">
                 <DeleteIcon/>
             </IconButton>
@@ -64,12 +64,13 @@ export function TodoList(props: PropsType) {
         props.onAddTask(title, props.id)
     }
 
-    const changeTodoListTitle = (newTitle: string) => {
-        props.changeTodoListTitle(props.id, newTitle)
+    const changeTodoListTitleHandler = (newValue: string) => {
+        props.changeTodoListTitle(newValue, props.id)
     }
 
-    return <div>
-        <h3><EditableSpan title={props.title} onChange={changeTodoListTitle}/>
+    debugger
+    return  <div>
+        <h3><EditableSpan value={props.title} onChange={changeTodoListTitleHandler}/>
             <IconButton onClick={removeTodoList} aria-label="delete">
                 <DeleteIcon/>
             </IconButton>

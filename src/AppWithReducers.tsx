@@ -8,10 +8,10 @@ import {Menu} from "@material-ui/icons";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
-    AddTodoListAC,
-    ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC,
-    RemoveTodoListAC,
+    addTodoListAC,
+    changeTodoListFilterAC,
+    changeTodoListTitleAC,
+    removeTodoListAC,
     todoListsReducer
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
@@ -74,25 +74,25 @@ function AppWithReducers() {
 
 
     const changeFilter = (value: FilterValuesType, todoListId: string) => {
-        const action = ChangeTodoListFilterAC(value, todoListId)
+        const action = changeTodoListFilterAC(value, todoListId)
         dispatchToTodoListsReducer(action)
 
     }
 
     let removeTodoList = (todoListId: string) => {
-        const action = RemoveTodoListAC(todoListId)
+        const action = removeTodoListAC(todoListId)
         dispatchToTodoListsReducer(action)
         dispatchToTasksReducer(action)
     }
 
     let changeTodoListTitle = (id: string, newTitle: string) => {
-        const action = ChangeTodoListTitleAC(id, newTitle)
+        const action = changeTodoListTitleAC(id, newTitle)
         dispatchToTodoListsReducer(action)
 
     }
 
     const addTodoList = (title: string) => {
-        const action = AddTodoListAC(title)
+        const action = addTodoListAC(title)
         dispatchToTodoListsReducer(action)
         dispatchToTasksReducer(action)
     }

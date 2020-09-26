@@ -1,20 +1,18 @@
 import React, {useReducer, useState} from 'react';
 import './App.css';
 import {TaskType, TodoList} from "./TodoList";
-import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import {
-    AddTodoListAC,
-    ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC,
-    RemoveTodoListAC,
-    todoListsReducer
+    addTodoListAC,
+    changeTodoListFilterAC,
+    changeTodoListTitleAC,
+    removeTodoListAC,
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 
@@ -24,19 +22,16 @@ export type TodoListType = {
     title: string
     filter: FilterValuesType
 }
-
 export type TasksStateType = {
     [type: string]: Array<TaskType>
 }
-
-
 function AppWithRedux() {
 
 
-    const dispatch = useDispatch()
+
     const todoLists = useSelector<AppRootState, Array<TodoListType>>(state => state.todoLists)
     const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks)
-
+    const dispatch = useDispatch()
 
 
     const onDeleteTask = (id: string, todoListId: string) => {
@@ -62,24 +57,22 @@ function AppWithRedux() {
 
 
     const changeFilter = (value: FilterValuesType, todoListId: string) => {
-        const action = ChangeTodoListFilterAC(value, todoListId)
+        const action = changeTodoListFilterAC(value, todoListId)
         dispatch(action)
 
     }
 
-    let removeTodoList = (todoListId: string) => {
-        const action = RemoveTodoListAC(todoListId)
+    const removeTodoList = (todoListId: string) => {
+        const action = removeTodoListAC(todoListId)
         dispatch(action)
     }
 
-    let changeTodoListTitle = (id: string, newTitle: string) => {
-        const action = ChangeTodoListTitleAC(id, newTitle)
-        dispatch(action)
-
+   const changeTodoListTitle = (title: string, id: string ) => {
+        dispatch(changeTodoListTitleAC(title, id))
     }
 
     const addTodoList = (title: string) => {
-        const action = AddTodoListAC(title)
+        const action = addTodoListAC(title)
         dispatch(action)
     }
 

@@ -21,25 +21,23 @@ export type ChangeTodoListFilterActionType = {
     id: string,
     filter: FilterValuesType
 }
-export const RemoveTodoListAC = (todoListId: string): RemoveTodoListActionType => {
+export const removeTodoListAC = (todoListId: string): RemoveTodoListActionType => {
     return { type: 'REMOVE-TODOLIST', id: todoListId}
 }
-export const AddTodoListAC = (title: string): AddTodoListActionType => {
+export const addTodoListAC = (title: string): AddTodoListActionType => {
     return { type: 'ADD-TODOLIST', title, todoListId: v1()}
 }
-export const ChangeTodoListTitleAC = (title: string, id: string): ChangeTodoListTitleActionType => {
-    return { type: 'CHANGE-TODOLIST-TITLE', title: title, id: id}
+export const changeTodoListTitleAC = (title: string, id: string): ChangeTodoListTitleActionType => {
+    return { type: 'CHANGE-TODOLIST-TITLE', id, title}
 }
-export const ChangeTodoListFilterAC = ( filter: FilterValuesType, id: string): ChangeTodoListFilterActionType => {
-    return { type: 'CHANGE-TODOLIST-FILTER', filter: filter, id: id}
+export const changeTodoListFilterAC = ( filter: FilterValuesType, id: string): ChangeTodoListFilterActionType => {
+    return { type: 'CHANGE-TODOLIST-FILTER',filter, id}
 }
 
 export let todoListId1 = v1()
 export let todoListId2 = v1()
 
-const initialState :Array<TodoListType> = [
-
-]
+const initialState :Array<TodoListType> = []
 
 export const todoListsReducer = (state: Array<TodoListType> = initialState, action: ActionsType):Array<TodoListType> => {
     switch (action.type) {
@@ -51,9 +49,9 @@ export const todoListsReducer = (state: Array<TodoListType> = initialState, acti
             return [ {id: action.todoListId, title: action.title, filter: 'all'}, ...state]
         }
         case 'CHANGE-TODOLIST-TITLE': {
-            let todoList = state.find(t => t.id == action.id)
+            const todoList = state.find(tl => tl.id === action.id);
             if (todoList) {
-                todoList.title = action.title
+                todoList.title = action.title;
             }
             return [...state]
         }
