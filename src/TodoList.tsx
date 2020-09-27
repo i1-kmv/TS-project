@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
@@ -25,7 +25,7 @@ export type TaskType = {
     isDone: boolean
 }
 
-export function TodoList(props: PropsType) {
+export const TodoList = React.memo((props: PropsType) => {
 
     const onAllFilter = () => props.changeFilter("all", props.id)
     const onActiveFilter = () => props.changeFilter("active", props.id)
@@ -60,15 +60,23 @@ export function TodoList(props: PropsType) {
 
     })
 
-    const onAddTask = (title: string) => {
+    const onAddTask = useCallback((title: string) => {
         props.onAddTask(title, props.id)
-    }
+    }, [])
 
     const changeTodoListTitleHandler = (newValue: string) => {
         props.changeTodoListTitle(newValue, props.id)
     }
 
-    debugger
+    let tasksForTodoList = props.tasks
+
+    if (props.filter === "completed") {
+        tasksForTodoList = props.tasks.filter(t => t.isDone)
+    }
+    if (props.filter === "active") {
+        tasksForTodoList = props.tasks.filter(t => !t.isDone)
+    }
+
     return  <div>
         <h3><EditableSpan value={props.title} onChange={changeTodoListTitleHandler}/>
             <IconButton onClick={removeTodoList} aria-label="delete">
@@ -99,5 +107,5 @@ export function TodoList(props: PropsType) {
             </Button>
         </div>
     </div>
-}
+})
 

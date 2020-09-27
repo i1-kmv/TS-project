@@ -6,7 +6,7 @@ import {ControlPoint} from "@material-ui/icons";
 type AddItemFormPropsType = {
     addItem: (newTaskTitle: string) => void
 }
-export const AddItemForm = (props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     const [newTaskTitle, setNewTaskTitle] = useState("")
     const [error, setError] = useState(false);
     const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +21,9 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
 
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(false)
+        if (error !== false) {
+            setError(false)
+        }
         if (e.charCode === 13) {
             if (newTaskTitle.trim() === '') {
                 return setError(true)
@@ -51,4 +53,4 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
             {error && <div className="error-message">Field is required</div>}
         </div>
     )
-}
+})
